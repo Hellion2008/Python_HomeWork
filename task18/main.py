@@ -27,3 +27,17 @@ for i in _list:
             max_el = i
 print(max_el)
 
+# import random
+# list = int(input('Enters the number of array elements: '))
+# list_arr = []
+# for i in range(list):
+#     list_arr.append(random.randint(0, 10))
+# print(list_arr, end=' ')
+# print()
+# max_el = max(list_arr)
+# num = int(input('Enter the number: '))
+# for i in list_arr:
+#     if max_el > i > num:
+#         max_el = i
+# print(f"-> {max_el}")
+
