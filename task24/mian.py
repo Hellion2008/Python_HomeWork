@@ -20,7 +20,7 @@ print(lst_berry)
 lst_max = list()
 lst_max.insert(0, lst_berry[-1] + lst_berry[0] + lst_berry[1])
 lst_max.insert(len(lst_berry) - 1, lst_berry[len(lst_berry) - 2] + lst_berry[len(lst_berry) - 1] + lst_berry[0])
-for i in range(1, len(lst_berry) - 2):
+for i in range(1, len(lst_berry) - 1):
     lst_max.insert(i, lst_berry[i - 1] + lst_berry[i] + lst_berry[i + 1])
 
 print(lst_max)
