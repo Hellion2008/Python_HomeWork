@@ -28,6 +28,7 @@ def menu():
     print('1. Все контакты\n')
     print('2. Найти контакт\n')
     print('3. Добавить контакт\n')
+    print('4. Изменить контакт\n')
     print('5. Удалить контакт\n')
     print('0. Выход\n')
 
@@ -44,9 +45,11 @@ def main():
             find_by_substring(file_path, input('Введи контакт: '))
         elif key_input == 3:
             add_contact(file_path)
+        elif key_input == 4:
+            change_contact(file_path, int(input('Введите id контакта: ')))
         elif key_input == 5:
             delete_contact(file_path, int(input('Введите id контакта: ')))
-        print("Хотите узнать что-то еще?")
+
         menu()
         key_input = int(input("Введите цифру: "))
     print('До свидания!')
@@ -80,22 +83,41 @@ def create_list_phonebook(file):
             data_dic = [lst[i] for i in range(1, len(lst))]
             phonebook[key_dic] = data_dic
     return phonebook
-            
+
+# запись в файл     
+def write_in_file(file,phonebook):
+    with open(file, 'w', encoding="utf-8") as f:
+        for (k,v) in phonebook.items():
+            data = " ".join(v)
+            f.write(f'{k} ' + data + '\n')
 
 # добавление контакта
 def add_contact(file):
     pb = create_list_phonebook(file)
     contact = []
-    sirname = contact.append(input("Введи Фамилию контакта: "))
-    name = contact.append(input("Введи Имя контакта: "))
-    secondname = contact.append(input("Введи Отчество контакта: "))
-    number = contact.append(input("Введи Номер контакта: "))
+    contact.append(input("Введи Фамилию контакта: "))
+    contact.append(input("Введи Имя контакта: "))
+    contact.append(input("Введи Отчество контакта: "))
+    contact.append(input("Введи Номер контакта: "))
     id = len(pb) + 1
+    while(pb.get(str(id))):
+        id += 1
     pb[id] = contact
-    with open(file, 'w', encoding="utf-8") as f:
-        for (k,v) in pb.items():
-            data = " ".join(v)
-            f.write(f'{k} ' + data + '\n')
+
+    write_in_file(file, pb)
+
+# изменение контакта
+def change_contact(file, id):
+    pb = create_list_phonebook(file)
+    if pb.get(str(id)):
+        pb[str(id)][0] = input("Введи Фамилию контакта: ")
+        pb[str(id)][1] = input("Введи Имя контакта: ")
+        pb[str(id)][2] = input("Введи Отчество контакта: ")
+        pb[str(id)][3] = input("Введи Номер контакта: ")
+        print("Изменения успешно применены\n")
+    else: print('контакт не найден\n')
+
+    write_in_file(file, pb)
 
 # удаление контакта
 def delete_contact(file, id):
@@ -103,14 +125,9 @@ def delete_contact(file, id):
     if pb.get(str(id)):
         del pb[str(id)]
         print('Удалено успешно\n')
+    else: print('Контакт не найден\n')
         
-    with open(file, 'w', encoding="utf-8") as f:
-        for (k,v) in pb.items():
-            data = " ".join(v)
-            f.write(f'{k} ' + data + '\n')
+    write_in_file(file, pb)
 
-# main()
-file_path = r'python_homework\task38\phonebook.txt'
-# print(create_list(file_path))
-# add_contact(file_path)
-# delete_contact(file_path, 2)
+
+main()
